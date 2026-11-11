@@ -2,34 +2,24 @@ package ru.kostikov.lab3;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
 
-/**
- * Задание 2. Генератор заданного количества (N) простых чисел.
- * Перебор чисел выполняется через интерфейс Iterator.
- */
+// Задание 2. Генерирует N простых чисел, перебирать их можно через Iterator
 public class PrimesGenerator implements Iterable<Integer> {
-    private final List<Integer> primes = new ArrayList<>();
+    private ArrayList<Integer> primes = new ArrayList<>();
 
-    public PrimesGenerator(int count) {
-        if (count < 0) {
-            throw new IllegalArgumentException("Количество не может быть отрицательным");
-        }
-        int candidate = 2;
-        while (primes.size() < count) {
-            if (isPrime(candidate)) {
-                primes.add(candidate);
+    public PrimesGenerator(int n) {
+        int number = 2;
+        while (primes.size() < n) {
+            if (isPrime(number)) {
+                primes.add(number);
             }
-            candidate++;
+            number++;
         }
     }
 
-    private static boolean isPrime(int number) {
-        if (number < 2) {
-            return false;
-        }
-        for (int d = 2; (long) d * d <= number; d++) {
+    // число простое, если делится только на 1 и на себя
+    private boolean isPrime(int number) {
+        for (int d = 2; d * d <= number; d++) {
             if (number % d == 0) {
                 return false;
             }
@@ -37,44 +27,46 @@ public class PrimesGenerator implements Iterable<Integer> {
         return true;
     }
 
-    /** Итератор в прямом порядке: от меньшего простого числа к большему. */
+    // итератор в прямом порядке
     @Override
     public Iterator<Integer> iterator() {
-        return new Iterator<>() {
-            private int index = 0;
-
-            @Override
-            public boolean hasNext() {
-                return index < primes.size();
-            }
-
-            @Override
-            public Integer next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return primes.get(index++);
-            }
-        };
+        return new ForwardIterator();
     }
 
-    /** Итератор в обратном порядке: от большего простого числа к меньшему. */
+    // итератор в обратном порядке
     public Iterator<Integer> reverseIterator() {
-        return new Iterator<>() {
-            private int index = primes.size() - 1;
+        return new BackwardIterator();
+    }
 
-            @Override
-            public boolean hasNext() {
-                return index >= 0;
-            }
+    private class ForwardIterator implements Iterator<Integer> {
+        private int index = 0;
 
-            @Override
-            public Integer next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return primes.get(index--);
-            }
-        };
+        @Override
+        public boolean hasNext() {
+            return index < primes.size();
+        }
+
+        @Override
+        public Integer next() {
+            int value = primes.get(index);
+            index++;
+            return value;
+        }
+    }
+
+    private class BackwardIterator implements Iterator<Integer> {
+        private int index = primes.size() - 1;
+
+        @Override
+        public boolean hasNext() {
+            return index >= 0;
+        }
+
+        @Override
+        public Integer next() {
+            int value = primes.get(index);
+            index--;
+            return value;
+        }
     }
 }

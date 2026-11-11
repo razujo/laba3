@@ -3,10 +3,8 @@ package ru.kostikov.lab3;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Задание 4. Частота встречаемости слов в английском тексте (с помощью HashMap).
- * Слова, отличающиеся только регистром, считаются одинаковыми.
- */
+// Задание 4. Частота встречаемости слов в английском тексте (с помощью HashMap).
+// Слова, отличающиеся только регистром, считаются одинаковыми.
 public class Task4WordFrequency {
     public static void main(String[] args) {
         System.out.println("===== Задание 4 =====");
@@ -26,10 +24,16 @@ public class Task4WordFrequency {
 
     public static Map<String, Integer> countWords(String text) {
         Map<String, Integer> frequency = new HashMap<>();
-        // Делим текст по всему, что не является буквой или апострофом
-        for (String word : text.toLowerCase().split("[^a-z']+")) {
-            if (!word.isEmpty()) {
-                frequency.merge(word, 1, Integer::sum);
+        // делаем все буквы маленькими и делим текст на слова по пробелам и знакам препинания
+        String[] words = text.toLowerCase().split("[ .,!?]+");
+        for (String word : words) {
+            if (word.isEmpty()) {
+                continue;
+            }
+            if (frequency.containsKey(word)) {
+                frequency.put(word, frequency.get(word) + 1);
+            } else {
+                frequency.put(word, 1);
             }
         }
         return frequency;

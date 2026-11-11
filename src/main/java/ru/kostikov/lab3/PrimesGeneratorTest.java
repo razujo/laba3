@@ -2,10 +2,8 @@ package ru.kostikov.lab3;
 
 import java.util.Iterator;
 
-/**
- * Задание 2. Проверочный класс: выводит первые N простых чисел
- * в прямом и обратном порядке.
- */
+// Задание 2. Проверочный класс: выводит первые N простых чисел
+// в прямом и обратном порядке.
 public class PrimesGeneratorTest {
     private static final int N = 20;
 

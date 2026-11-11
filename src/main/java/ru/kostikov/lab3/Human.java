@@ -2,10 +2,8 @@ package ru.kostikov.lab3;
 
 import java.util.Objects;
 
-/**
- * Задание 3. Человек: имя, фамилия, возраст.
- * Естественный порядок (Comparable): по фамилии, затем по имени, затем по возрасту.
- */
+// Задание 3. Человек: имя, фамилия, возраст.
+// Естественный порядок (Comparable): по фамилии, затем по имени, затем по возрасту.
 public class Human implements Comparable<Human> {
     private final String firstName;
     private final String lastName;
@@ -36,22 +34,19 @@ public class Human implements Comparable<Human> {
             result = firstName.compareTo(other.firstName);
         }
         if (result == 0) {
-            result = Integer.compare(age, other.age);
+            result = age - other.age;
         }
         return result;
     }
 
+    // два человека равны, если у них совпадают имя, фамилия и возраст
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Human human)) {
+        if (!(o instanceof Human)) {
             return false;
         }
-        return age == human.age
-                && firstName.equals(human.firstName)
-                && lastName.equals(human.lastName);
+        Human other = (Human) o;
+        return age == other.age && firstName.equals(other.firstName) && lastName.equals(other.lastName);
     }
 
     @Override

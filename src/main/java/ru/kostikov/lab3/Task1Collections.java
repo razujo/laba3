@@ -7,9 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Задание 1. Работа со статическими методами класса Collections.
- */
+// Задание 1. Работа со статическими методами класса Collections.
 public class Task1Collections {
     private static final int N = 30;
 
@@ -33,7 +31,7 @@ public class Task1Collections {
         System.out.println("c) По возрастанию:         " + list);
 
         // d) Сортировка в обратном порядке
-        list.sort(Collections.reverseOrder());
+        Collections.sort(list, Collections.reverseOrder());
         System.out.println("d) В обратном порядке:     " + list);
 
         // e) Перемешивание
